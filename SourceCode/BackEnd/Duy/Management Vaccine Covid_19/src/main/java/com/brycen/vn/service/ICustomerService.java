@@ -1,0 +1,16 @@
+package com.brycen.vn.service;
+
+import com.brycen.vn.dto.CustomerDTO;
+import com.brycen.vn.dto.User_CustomerDTO;
+
+public interface ICustomerService {
+	
+	CustomerDTO getCustomerById(Long id);
+	
+	boolean registerCustomer(User_CustomerDTO user_CustomerDTO);
+	
+	boolean getCustomerByIdentification(String identification);
+	
+	
+
+}

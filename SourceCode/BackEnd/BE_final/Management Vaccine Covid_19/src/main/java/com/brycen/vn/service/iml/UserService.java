@@ -31,8 +31,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public boolean checkLogin(String username, String password) {
-		User userMySql = userRepository.findByUsername(username)
-				.orElseThrow(()-> new UsernameNotFoundException("User"+ username+" not found "));;
+		User userMySql = userRepository.getByUsername(username);
 		System.out.println("pass"+ userMySql.getPassword());
 		if(bcryptEncoder.matches(password,userMySql.getPassword())) {
 			return true;
@@ -42,8 +41,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User loadUserByUsername(String username) {
-		return userRepository.findByUsername(username)
-				.orElseThrow(()-> new UsernameNotFoundException("User"+ username+" not found "));
+		return userRepository.getByUsername(username);
 	}
 
 	@Override
@@ -70,8 +68,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public boolean register(User user) {
-		User user1 = userRepository.findByUsername(user.getUsername())
-				.orElseThrow(()-> new UsernameNotFoundException("User"+ user.getUsername()+" not found "));
+		User user1 = userRepository.getByUsername(user.getUsername());
 		if(user1==null) {
 			userRepository.save(user);
 			return true;
@@ -83,8 +80,7 @@ public class UserService implements IUserService {
 
 @Override
 	public boolean findByName(String name) {
-		User user = userRepository.findByUsername(name)
-				.orElseThrow(()-> new UsernameNotFoundException("User"+ name+" not found "));;
+		User user = userRepository.getByUsername(name);
 		if(user!=null) {
 			return true;
 		}
@@ -93,8 +89,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserResponse findUser(String name) {
-		User user = userRepository.findByUsername(name)
-				.orElseThrow(()-> new UsernameNotFoundException("User"+ name+" not found "));;
+		User user = userRepository.getByUsername(name);
 		UserResponse userResporn = modelMapper.map(user, UserResponse.class);
 		CustomerDTO customerDTO = modelMapper.map(user.getCustomer(), CustomerDTO.class);
 		userResporn.setCustomerDTO(customerDTO);
